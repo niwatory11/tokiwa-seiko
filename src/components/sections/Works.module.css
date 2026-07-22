@@ -1,0 +1,94 @@
+.section {
+  background: var(--color-bg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.artWrap {
+  background-color: var(--color-bg-alt);
+  background-image: var(--grid-image);
+  background-size: var(--grid-size) var(--grid-size);
+  border: 1.5px solid var(--c-sumi);
+  padding: var(--space-4);
+}
+
+.drawingNo {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}
+
+.name {
+  margin-top: var(--space-1);
+  font-size: var(--fs-h3);
+  letter-spacing: 0.06em;
+}
+
+.specs {
+  margin-top: var(--space-4);
+  border-top: 1px solid var(--color-line);
+}
+
+.specRow {
+  display: flex;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.specLabel {
+  flex: 0 0 4em;
+  font-size: var(--fs-caption);
+  letter-spacing: 0.16em;
+  color: var(--color-text-muted);
+}
+
+.specValue {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+}
+
+.desc {
+  margin-top: var(--space-4);
+  font-size: var(--fs-small);
+  line-height: 1.9;
+  color: var(--color-text);
+  max-width: 36em;
+}
+
+.note {
+  margin-top: clamp(var(--space-8), 5vw, var(--space-12));
+  font-size: var(--fs-caption);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-12) var(--space-8);
+  }
+
+  /* 代表例は全幅+横組みで主役にする(等サイズカードの回避) */
+  .cardFeatured {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-12);
+  }
+
+  .cardFeatured .artWrap {
+    flex: 0 0 52%;
+    padding: var(--space-6);
+  }
+}

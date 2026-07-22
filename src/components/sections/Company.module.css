@@ -1,0 +1,60 @@
+.section {
+  background: var(--color-bg-alt);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.statementTitle {
+  font-size: clamp(1.375rem, 1.2rem + 0.9vw, 1.875rem);
+  letter-spacing: 0.08em;
+}
+
+.statementBody {
+  margin-top: var(--space-6);
+  max-width: 34em;
+  line-height: 2;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-line);
+}
+
+.infoRow {
+  display: flex;
+  gap: var(--space-4);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.infoLabel {
+  flex: 0 0 6em;
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.infoValue {
+  font-size: var(--fs-small);
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    flex-direction: row;
+    gap: var(--space-20);
+  }
+
+  .statement {
+    flex: 1;
+  }
+
+  .infoWrap {
+    flex: 0 0 30rem;
+  }
+}

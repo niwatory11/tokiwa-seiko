@@ -1,0 +1,164 @@
+.hero {
+  padding-top: var(--header-h);
+  background-color: var(--color-bg);
+  background-image: var(--grid-image);
+  background-size: var(--grid-size) var(--grid-size);
+  display: flex;
+  flex-direction: column;
+}
+
+.inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-12);
+  padding-block: clamp(var(--space-12), 8vw, var(--space-24));
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+}
+
+.heading {
+  margin-top: var(--space-4);
+  font-size: var(--fs-display);
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+}
+
+/* 見出し内の数値だけ等幅+常盤色: 「精度が主役」を書体で言う */
+.num {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.subcopy {
+  margin-top: var(--space-6);
+  max-width: 30em;
+  font-size: var(--fs-body-lg);
+  color: var(--color-text);
+}
+
+.ctas {
+  margin-top: var(--space-8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+/* --- 表題欄 --- */
+
+.titleBlock {
+  border: 1.5px solid var(--c-sumi);
+  background: var(--color-bg-alt);
+  max-width: 26rem;
+}
+
+.tbRow {
+  display: flex;
+}
+
+.tbRow + .tbRow {
+  border-top: 1px solid var(--c-sumi);
+}
+
+.tbLabel {
+  flex: 0 0 4.5em;
+  padding: var(--space-2) var(--space-3);
+  border-right: 1px solid var(--c-sumi);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.2em;
+  color: var(--color-text-muted);
+}
+
+.tbValue {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.06em;
+}
+
+.tbMono {
+  font-family: var(--font-mono);
+}
+
+/* --- 事実の帯 --- */
+
+.factsBand {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.fact {
+  padding: var(--space-6) var(--space-4);
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-1);
+}
+
+/* 中間の罫線(図面の枠線のように) */
+.fact:nth-child(even) {
+  border-left: 1px solid var(--color-line);
+}
+
+.fact:nth-child(n + 3) {
+  border-top: 1px solid var(--color-line);
+}
+
+.factLabel {
+  font-size: var(--fs-caption);
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+
+.factValue {
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.factUnit {
+  font-size: 0.55em;
+  margin-left: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .facts {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .fact:nth-child(n) {
+    border-top: 0;
+  }
+
+  .fact:nth-child(n + 2) {
+    border-left: 1px solid var(--color-line);
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-16);
+    min-height: calc(78vh - var(--header-h));
+  }
+
+  .titleBlock {
+    flex: 0 0 24rem;
+  }
+}

@@ -1,0 +1,21 @@
+.svg {
+  width: 100%;
+  height: auto;
+}
+
+.dimText,
+.dimTextV,
+.dimTextAccent {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  fill: var(--c-usuzumi);
+}
+
+.dimTextV {
+  writing-mode: vertical-rl;
+}
+
+.dimTextAccent {
+  fill: var(--c-tokiwa);
+  font-weight: 600;
+}
