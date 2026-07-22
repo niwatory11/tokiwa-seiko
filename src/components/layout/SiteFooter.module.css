@@ -53,6 +53,6 @@
   line-height: 1.9;
   color: var(--c-keisen);
   max-width: 46em;
-  border-top: 1px solid rgb(247 248 246 / 0.2);
+  border-top: 1px solid var(--color-line-inverse);
   padding-top: var(--space-6);
 }

@@ -54,7 +54,7 @@ describe('QuoteForm', () => {
     const user = userEvent.setup()
     render(<QuoteForm />)
 
-    await user.click(screen.getByRole('button', { name: '入力内容を確認する' }))
+    await user.click(screen.getByRole('button', { name: 'デモ入力を完了する' }))
 
     const summary = screen.getByRole('alert')
     expect(summary).toHaveTextContent('8件の不備')
@@ -69,7 +69,7 @@ describe('QuoteForm', () => {
     const user = userEvent.setup()
     render(<QuoteForm />)
 
-    await user.click(screen.getByRole('button', { name: '入力内容を確認する' }))
+    await user.click(screen.getByRole('button', { name: 'デモ入力を完了する' }))
     const summary = screen.getByRole('alert')
     await user.click(
       within(summary).getByRole('link', { name: /メールアドレス/ }),
@@ -99,13 +99,14 @@ describe('QuoteForm', () => {
     render(<QuoteForm />)
 
     await fillValidForm(user)
-    await user.click(screen.getByRole('button', { name: '入力内容を確認する' }))
+    await user.click(screen.getByRole('button', { name: 'デモ入力を完了する' }))
 
     const done = screen.getByRole('status')
     expect(done).toHaveTextContent('見積もりフォームのデモが完了しました')
     expect(done).toHaveTextContent('保存・送信されていません')
+    expect(done).toHaveFocus()
     expect(
-      screen.queryByRole('button', { name: '入力内容を確認する' }),
+      screen.queryByRole('button', { name: 'デモ入力を完了する' }),
     ).not.toBeInTheDocument()
   })
 })

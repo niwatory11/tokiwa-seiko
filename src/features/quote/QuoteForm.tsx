@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { categoryOptions, materialOptions, quoteNotes } from '../../data/quote'
 import { emptyQuoteValues } from './types'
@@ -86,6 +86,12 @@ export function QuoteForm() {
   const [errors, setErrors] = useState<QuoteErrors>({})
   const [showSummary, setShowSummary] = useState(false)
   const [status, setStatus] = useState<Status>('idle')
+  const doneRef = useRef<HTMLDivElement>(null)
+
+  // 送信ボタンがDOMから消えても、キーボードの現在位置を完了表示へ引き継ぐ
+  useEffect(() => {
+    if (status === 'done') doneRef.current?.focus()
+  }, [status])
 
   const applyError = (field: QuoteField, message: string | null) => {
     setErrors((prev) => {
@@ -148,7 +154,12 @@ export function QuoteForm() {
 
   if (status === 'done') {
     return (
-      <div role="status" className={styles.doneBox}>
+      <div
+        ref={doneRef}
+        role="status"
+        tabIndex={-1}
+        className={styles.doneBox}
+      >
         <p className={styles.doneTitle}>見積もりフォームのデモが完了しました</p>
         <p className={styles.doneBody}>
           入力された内容は保存・送信されていません。実在する企業への見積もり依頼も成立していません。
@@ -305,7 +316,7 @@ export function QuoteForm() {
       </div>
 
       <button type="submit" className={styles.submit}>
-        入力内容を確認する
+        デモ入力を完了する
       </button>
       <p className={styles.formNote}>{quoteNotes.file}</p>
     </form>

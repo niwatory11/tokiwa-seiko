@@ -27,6 +27,7 @@
   --color-accent-bg: var(--c-tokiwa-usu);
   --color-on-accent: var(--c-white);
   --color-line: var(--c-keisen);
+  --color-line-inverse: rgb(247 248 246 / 0.2);
   --color-error: var(--c-shu);
   --color-error-bg: var(--c-shu-usu);
   --color-success-bg: var(--c-tokiwa-usu);
