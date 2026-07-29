@@ -9,7 +9,7 @@
   color: var(--c-paper);
   text-decoration: none;
   translate: 0 calc(-100% - var(--space-4));
-  transition: translate 0.2s var(--ease-out);
+  transition: translate var(--dur-quick) var(--ease-out);
 }
 
 .skipLink:focus-visible {

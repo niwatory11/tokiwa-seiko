@@ -64,6 +64,11 @@
   --tap-min: 44px;
   --header-h: 4rem;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-quick: 0.2s; /* マイクロインタラクション(hover等) */
+  --dur-slide: 0.3s; /* 面の移動(ドロワーの開閉等) */
+  --dur-reveal: 0.6s; /* リビール(フェード+上昇) */
+  --dur-draw: 0.9s; /* 線描画 */
+  --ease-draw: cubic-bezier(0.65, 0, 0.35, 1); /* 定規で線を引く手つき */
 
   /* 方眼パターン(ヒーロー・フッターの地) */
   --grid-size: 24px;

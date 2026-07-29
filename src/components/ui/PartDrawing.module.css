@@ -19,3 +19,36 @@
   fill: var(--c-tokiwa);
   font-weight: 600;
 }
+
+.draw,
+.drawLate {
+  stroke-dasharray: 1;
+  transition: stroke-dashoffset var(--dur-draw) var(--ease-draw);
+}
+
+.drawLate {
+  transition-delay: 0.3s;
+}
+
+.hatch {
+  transition:
+    stroke-dashoffset var(--dur-draw) var(--ease-draw),
+    fill-opacity 0.45s var(--ease-out) 0.55s;
+}
+
+.fade {
+  transition: opacity 0.45s var(--ease-out) 0.75s;
+}
+
+:global(.reveal[data-visible='false']) .draw,
+:global(.reveal[data-visible='false']) .drawLate {
+  stroke-dashoffset: 1;
+}
+
+:global(.reveal[data-visible='false']) .hatch {
+  fill-opacity: 0;
+}
+
+:global(.reveal[data-visible='false']) .fade {
+  opacity: 0;
+}

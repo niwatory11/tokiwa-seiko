@@ -42,7 +42,7 @@
 - 角丸は使わない(`--radius: 0`)。図面に角丸はない
 - ブレークポイントは 480 / 768 / 1024 / 1280px の生値をモバイルファースト(`min-width`)で統一
 - 共通レイアウトは `global.css` の `.container` / `.section`、装飾はCSS Modules側に書く
-- スクロール演出は `useReveal` + `.reveal` の「フェード+12px上昇」のみ。reduced-motion での無効化を必ず確認
+- モーションは「製図の手つき」に限定: リビール(フェード+12px上昇)/ SVG線画(`pathLength={1}` + stroke-dashoffset。ロード時のロゴ線画を含む)/ 罫線・下線の scaleX ドロー / 行の段差フェード(nth-child 遅延)/ 検印の押印。機能的モーション(ドロワー開閉等)は `--dur-slide` を使う。時間・イージングは `tokens.css` の `--dur-*` / `--ease-*` を使う。スクロール連動は `useReveal` 経由のみ。reduced-motion では duration と delay の両方が無効化されることを必ず確認
 - コピー(文言・数値)は `src/data/` に置き、コンポーネントに直書きしない
 
 ## コマンド

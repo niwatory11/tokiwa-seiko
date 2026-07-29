@@ -1,3 +1,23 @@
+@keyframes drawerFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawerSlideIn {
+  from {
+    translate: 100% 0;
+  }
+
+  to {
+    translate: 0 0;
+  }
+}
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -13,6 +33,7 @@
   padding: 0;
   background: var(--color-drawer-overlay);
   cursor: pointer;
+  animation: drawerFadeIn var(--dur-quick) var(--ease-out) both;
 }
 
 .panel {
@@ -26,6 +47,7 @@
   flex-direction: column;
   gap: var(--space-6);
   overflow-y: auto;
+  animation: drawerSlideIn var(--dur-slide) var(--ease-out) both;
 }
 
 .close {
@@ -60,7 +82,7 @@
   font-weight: 500;
   letter-spacing: 0.08em;
   border-bottom: 1px solid var(--color-line);
-  transition: background-color 0.2s var(--ease-out);
+  transition: background-color var(--dur-quick) var(--ease-out);
 }
 
 .link:hover {

@@ -33,6 +33,13 @@
   left: 0;
   width: var(--space-8);
   border-top: 2px solid var(--color-accent);
+  transform-origin: left center;
+  transition: scale 0.5s var(--ease-draw)
+    calc(var(--reveal-delay, 0s) + 0.2s);
+}
+
+.step[data-visible='false']::before {
+  scale: 0 1;
 }
 
 .stepTitle {

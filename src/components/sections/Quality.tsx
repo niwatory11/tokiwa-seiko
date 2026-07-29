@@ -1,24 +1,28 @@
 import { inspectionStamp, qualityItems } from '../../data/quality'
+import { useReveal } from '../../hooks/useReveal'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeading } from '../ui/SectionHeading'
 import styles from './Quality.module.css'
 
 /** 検印スタンプ(サイト内で朱色を使う唯一の意匠) */
 function Stamp() {
+  const { ref, isVisible } = useReveal<HTMLDivElement>()
   return (
-    <svg viewBox="0 0 80 80" className={styles.stamp} aria-hidden="true">
-      <circle cx="40" cy="40" r="36" fill="none" stroke="var(--c-shu)" strokeWidth="3" />
-      <text
-        x="40"
-        y="54"
-        textAnchor="middle"
-        fontSize="40"
-        fontWeight="700"
-        fill="var(--c-shu)"
-      >
-        {inspectionStamp.label}
-      </text>
-    </svg>
+    <div ref={ref} data-visible={isVisible} className={styles.stampWrap}>
+      <svg viewBox="0 0 80 80" className={styles.stamp} aria-hidden="true">
+        <circle cx="40" cy="40" r="36" fill="none" stroke="var(--c-shu)" strokeWidth="3" />
+        <text
+          x="40"
+          y="54"
+          textAnchor="middle"
+          fontSize="40"
+          fontWeight="700"
+          fill="var(--c-shu)"
+        >
+          {inspectionStamp.label}
+        </text>
+      </svg>
+    </div>
   )
 }
 

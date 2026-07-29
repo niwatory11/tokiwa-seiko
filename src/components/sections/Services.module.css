@@ -64,6 +64,35 @@
   gap: var(--space-1);
   padding-block: var(--space-3);
   border-top: 1px dotted var(--color-line);
+  transition: opacity 0.45s var(--ease-out);
+}
+
+.materialRow:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.materialRow:nth-child(2) {
+  transition-delay: 0.16s;
+}
+
+.materialRow:nth-child(3) {
+  transition-delay: 0.22s;
+}
+
+.materialRow:nth-child(4) {
+  transition-delay: 0.28s;
+}
+
+.materialRow:nth-child(5) {
+  transition-delay: 0.34s;
+}
+
+.materialRow:nth-child(6) {
+  transition-delay: 0.4s;
+}
+
+:global(.reveal[data-visible='false']) .materialRow {
+  opacity: 0;
 }
 
 .materialCategory {

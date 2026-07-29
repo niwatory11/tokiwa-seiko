@@ -1,3 +1,12 @@
+.eyebrow,
+.heading,
+.subcopy,
+.ctas,
+.titleBlock,
+.fact {
+  animation: heroRise var(--dur-reveal) var(--ease-out) both;
+}
+
 .hero {
   padding-top: var(--header-h);
   background-color: var(--color-bg);
@@ -21,6 +30,7 @@
   font-size: var(--fs-caption);
   letter-spacing: 0.18em;
   color: var(--color-accent);
+  animation-delay: 0s;
 }
 
 .heading {
@@ -28,6 +38,7 @@
   font-size: var(--fs-display);
   line-height: 1.25;
   letter-spacing: 0.04em;
+  animation-delay: 0.08s;
 }
 
 /* 見出し内の数値だけ等幅+常盤色: 「精度が主役」を書体で言う */
@@ -42,6 +53,7 @@
   max-width: 30em;
   font-size: var(--fs-body-lg);
   color: var(--color-text);
+  animation-delay: 0.16s;
 }
 
 .ctas {
@@ -49,6 +61,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
+  animation-delay: 0.24s;
 }
 
 /* --- 表題欄 --- */
@@ -57,6 +70,7 @@
   border: 1.5px solid var(--c-sumi);
   background: var(--color-bg-alt);
   max-width: 26rem;
+  animation-delay: 0.32s;
 }
 
 .tbRow {
@@ -104,6 +118,23 @@
   display: flex;
   flex-direction: column-reverse;
   gap: var(--space-1);
+  animation-delay: 0.44s;
+}
+
+.fact:nth-child(1) {
+  animation-delay: 0.44s;
+}
+
+.fact:nth-child(2) {
+  animation-delay: 0.50s;
+}
+
+.fact:nth-child(3) {
+  animation-delay: 0.56s;
+}
+
+.fact:nth-child(4) {
+  animation-delay: 0.62s;
 }
 
 /* 中間の罫線(図面の枠線のように) */
@@ -160,5 +191,17 @@
 
   .titleBlock {
     flex: 0 0 24rem;
+  }
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }

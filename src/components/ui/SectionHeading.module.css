@@ -16,6 +16,12 @@
   width: var(--space-8);
   margin-left: var(--space-3);
   border-top: 1px solid var(--color-accent);
+  transform-origin: left center;
+  transition: scale 0.5s var(--ease-draw) 0.2s;
+}
+
+.wrap[data-visible='false'] .no::after {
+  scale: 0 1;
 }
 
 .title {

@@ -6,14 +6,26 @@
   position: relative;
 }
 
-.stamp {
+.stampWrap {
   position: absolute;
   top: 0;
   right: 0;
   width: clamp(3.5rem, 8vw, 5rem);
+  opacity: 0.9;
+}
+
+.stamp {
+  width: 100%;
   height: auto;
   rotate: -8deg;
-  opacity: 0.9;
+}
+
+.stampWrap[data-visible='false'] .stamp {
+  opacity: 0;
+}
+
+.stampWrap[data-visible='true'] .stamp {
+  animation: stampPress 0.4s var(--ease-out) 0.3s both;
 }
 
 .list {
@@ -45,5 +57,22 @@
   .list {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-12) var(--space-16);
+  }
+}
+
+@keyframes stampPress {
+  0% {
+    opacity: 0;
+    scale: 1.5;
+  }
+
+  55% {
+    opacity: 1;
+    scale: 0.95;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
   }
 }

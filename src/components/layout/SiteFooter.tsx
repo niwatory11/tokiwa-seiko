@@ -1,11 +1,17 @@
 import { companyInfo } from '../../data/company'
 import { navItems } from '../../data/nav'
+import { useReveal } from '../../hooks/useReveal'
 import styles from './SiteFooter.module.css'
 
 export function SiteFooter() {
+  const { ref, isVisible } = useReveal<HTMLDivElement>()
   return (
     <footer className={styles.footer}>
-      <div className={`container ${styles.inner}`}>
+      <div
+        ref={ref}
+        data-visible={isVisible}
+        className={`container ${styles.inner}`}
+      >
         <div className={styles.brand}>
           <p className={styles.name}>{companyInfo.name}</p>
           <p className={styles.tagline}>精密切削加工 — 試作1個から量産まで</p>
