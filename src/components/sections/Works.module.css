@@ -20,6 +20,12 @@
   background-size: var(--grid-size) var(--grid-size);
   border: 1.5px solid var(--c-sumi);
   padding: var(--space-4);
+  transition: border-color var(--dur-quick) var(--ease-out);
+}
+
+/* hover: いま読んでいる図面の枠を常盤色にする(持ち上げはしない) */
+.card:hover .artWrap {
+  border-color: var(--color-accent);
 }
 
 .drawingNo {

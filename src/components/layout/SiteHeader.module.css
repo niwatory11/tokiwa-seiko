@@ -29,6 +29,12 @@
   height: 1.75rem;
   color: var(--color-accent);
   flex: none;
+  transition: color var(--dur-quick) var(--ease-out);
+}
+
+.logo:hover .logoMark,
+.logo:focus-visible .logoMark {
+  color: var(--color-accent-strong);
 }
 
 @keyframes logoDraw {
@@ -115,6 +121,16 @@
   scale: 1 1;
 }
 
+/* scroll-spy: 現在地の下線は hover 下線と同じ ::after を常時表示する(図面の「参照中の欄」) */
+.navLink:focus-visible::after,
+.navLink[aria-current='location']::after {
+  scale: 1 1;
+}
+
+.navLink[aria-current='location'] {
+  color: var(--color-accent-strong);
+}
+
 .actions {
   margin-left: auto;
   display: flex;
@@ -157,6 +173,14 @@
   font-size: var(--fs-small);
   letter-spacing: 0.08em;
   cursor: pointer;
+  transition:
+    border-color var(--dur-quick) var(--ease-out),
+    color var(--dur-quick) var(--ease-out);
+}
+
+.menuButton:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-strong);
 }
 
 .menuButton:active {

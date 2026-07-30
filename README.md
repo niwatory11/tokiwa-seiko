@@ -30,6 +30,7 @@ B2B製造業の共通言語である機械図面の様式を、そのままデ�
 - 見積もり依頼フォーム(フロントエンドバリデーション)
   - メール・電話形式、希望納期は「7日後〜180日後」の境界検証
   - blur時+送信時の検証、エラーサマリーからの各項目リンク、`aria-invalid` / `aria-describedby`
+- スクロール連動ナビ(閲覧中セクションを `aria-current="location"` で表示)
 - スキップリンク、セマンティックHTML、キーボード操作対応、`prefers-reduced-motion` 対応
 
 ## 技術構成
@@ -40,7 +41,7 @@ B2B製造業の共通言語である機械図面の様式を、そのままデ�
 | ビルド | Vite 8 |
 | スタイル | CSS Modules + CSS Custom Properties(デザイントークン) |
 | フォント | @fontsource(セルフホスト・unicode-rangeスライス配信) |
-| テスト | Vitest + Testing Library(25件) |
+| テスト | Vitest + Testing Library(36件) |
 | lint | oxlint |
 
 アニメーションライブラリ・CSSフレームワークは使用していません(依存は最小限)。
@@ -74,7 +75,7 @@ npm run preview    # production buildの確認
 - ドロワーのフォーカストラップとフォーカス返却
 - 装飾SVGは `aria-hidden`、意味のある図面SVGは `role="img"` + 説明
 - 本文コントラスト4.5:1以上、タップ領域44px以上
-- `prefers-reduced-motion: reduce` でアニメーション・smooth scrollを無効化
+- `prefers-reduced-motion: reduce` でアニメーション・smooth scrollを無効化(duration と delay の両方を無効化。ナビの現在地表示は機能として維持)
 
 ## 設計根拠(市場調査ベース)
 

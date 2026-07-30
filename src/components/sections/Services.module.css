@@ -10,14 +10,45 @@
 
 .item {
   padding-block: var(--space-6);
-  border-top: 1px solid var(--color-line);
+  border-top: 1px solid transparent;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
 
 .item:last-child {
-  border-bottom: 1px solid var(--color-line);
+  border-bottom: 1px solid transparent;
+}
+
+/* 上罫: 透明border上に1px疑似要素を重ね、左から引く */
+.item::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-line);
+  transform-origin: left center;
+  transition: scale 0.5s var(--ease-draw) calc(var(--reveal-delay, 0s) + 0.2s);
+}
+
+.item:last-child::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-line);
+  transform-origin: left center;
+  transition: scale 0.5s var(--ease-draw) calc(var(--reveal-delay, 0s) + 0.3s);
+}
+
+.item[data-visible='false']::before,
+.item[data-visible='false']::after {
+  scale: 0 1;
 }
 
 .itemHead {

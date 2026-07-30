@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { navItems, quoteCta } from '../../data/nav'
+import { useScrollSpy } from '../../hooks/useScrollSpy'
 import { MobileDrawer } from './MobileDrawer'
 import styles from './SiteHeader.module.css'
+
+/** 毎レンダーの再購読を避けるためモジュールレベルで固定する */
+const sectionIds = navItems.map((item) => item.href.slice(1))
 
 /** ロゴマーク: 図面のセンターマーク(中心線記号) */
 function LogoMark() {
@@ -34,6 +38,7 @@ function LogoMark() {
  */
 export function SiteHeader() {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const activeId = useScrollSpy(sectionIds)
 
   return (
     <>
@@ -51,7 +56,13 @@ export function SiteHeader() {
             <ul className={styles.navList}>
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a href={item.href} className={styles.navLink}>
+                  <a
+                    href={item.href}
+                    className={styles.navLink}
+                    aria-current={
+                      activeId !== null && item.href === `#${activeId}` ? 'location' : undefined
+                    }
+                  >
                     {item.label}
                   </a>
                 </li>

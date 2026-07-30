@@ -55,6 +55,17 @@
   transition-delay: 0.5s;
 }
 
+/* 行ハイライト: スタガー用 transition-delay が tr にあるため、hover はセル側に置く */
+.table tbody th,
+.table tbody td {
+  transition: background-color var(--dur-quick) var(--ease-out);
+}
+
+.table tbody tr:hover > th,
+.table tbody tr:hover > td {
+  background-color: var(--color-accent-bg);
+}
+
 :global(.reveal[data-visible='false']) .table tbody tr {
   opacity: 0;
 }

@@ -75,16 +75,18 @@
 
 .tbRow {
   display: flex;
+  position: relative;
 }
 
 .tbRow + .tbRow {
-  border-top: 1px solid var(--c-sumi);
+  border-top: 1px solid transparent;
 }
 
 .tbLabel {
   flex: 0 0 4.5em;
   padding: var(--space-2) var(--space-3);
-  border-right: 1px solid var(--c-sumi);
+  border-right: 1px solid transparent;
+  position: relative;
   font-size: var(--fs-caption);
   letter-spacing: 0.2em;
   color: var(--color-text-muted);
@@ -94,10 +96,82 @@
   padding: var(--space-2) var(--space-3);
   font-size: var(--fs-caption);
   letter-spacing: 0.06em;
+  animation: tbFill 0.45s var(--ease-out) both;
 }
 
 .tbMono {
   font-family: var(--font-mono);
+}
+
+/* 行罫線: 透明border上に1px疑似要素を重ね、左から引く */
+.tbRow + .tbRow::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--c-sumi);
+  transform-origin: left center;
+  animation: tbDrawX 0.4s var(--ease-draw) both;
+}
+
+.tbRow:nth-child(2)::before {
+  animation-delay: 0.5s;
+}
+
+.tbRow:nth-child(3)::before {
+  animation-delay: 0.58s;
+}
+
+.tbRow:nth-child(4)::before {
+  animation-delay: 0.66s;
+}
+
+/* ラベル列の縦罫: 1本の線を上の行から順に引き下ろす */
+.tbLabel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -1px;
+  width: 1px;
+  background: var(--c-sumi);
+  transform-origin: center top;
+  animation: tbDrawY 0.3s var(--ease-draw) both;
+}
+
+.tbRow:nth-child(1) .tbLabel::after {
+  animation-delay: 0.45s;
+}
+
+.tbRow:nth-child(2) .tbLabel::after {
+  animation-delay: 0.53s;
+}
+
+.tbRow:nth-child(3) .tbLabel::after {
+  animation-delay: 0.61s;
+}
+
+.tbRow:nth-child(4) .tbLabel::after {
+  animation-delay: 0.69s;
+}
+
+/* 値の記入: 様式→罫線→値の製図順序 */
+.tbRow:nth-child(1) .tbValue {
+  animation-delay: 0.7s;
+}
+
+.tbRow:nth-child(2) .tbValue {
+  animation-delay: 0.78s;
+}
+
+.tbRow:nth-child(3) .tbValue {
+  animation-delay: 0.86s;
+}
+
+.tbRow:nth-child(4) .tbValue {
+  animation-delay: 0.94s;
 }
 
 /* --- 事実の帯 --- */
@@ -203,5 +277,35 @@
   to {
     opacity: 1;
     translate: 0 0;
+  }
+}
+
+@keyframes tbDrawX {
+  from {
+    scale: 0 1;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes tbDrawY {
+  from {
+    scale: 1 0;
+  }
+
+  to {
+    scale: 1 1;
+  }
+}
+
+@keyframes tbFill {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
