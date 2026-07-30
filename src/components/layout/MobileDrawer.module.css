@@ -93,3 +93,34 @@
   color: var(--color-accent-strong);
   font-weight: 700;
 }
+
+/* ==========================================================================
+   退場: 入場と対称(パネルは右へ、幕はフェード)
+   退場 keyframes は例外的に to が隠し状態でよい: 直後に必ずアンマウントし、
+   reduced-motion では 0.01ms で完了して即アンマウントされるため
+   ========================================================================== */
+
+@keyframes drawerFadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes drawerSlideOut {
+  to {
+    translate: 100% 0;
+  }
+}
+
+/* 退場中は操作を受け付けない(消えかけの幕・リンクへの誤クリック防止) */
+.overlay[data-exiting='true'] {
+  pointer-events: none;
+}
+
+.overlay[data-exiting='true'] .backdrop {
+  animation: drawerFadeOut var(--dur-quick) var(--ease-out) both;
+}
+
+.overlay[data-exiting='true'] .panel {
+  animation: drawerSlideOut var(--dur-slide) var(--ease-out) both;
+}

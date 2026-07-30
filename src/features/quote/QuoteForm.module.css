@@ -1,3 +1,30 @@
+/* 検図の指摘: エラーはフェード+4px上昇で書き込まれる(リビールの縮小形)
+   reduced-motion 対策: 隠し状態は from のみ・to は最終静止状態・fill は both */
+@keyframes noteIn {
+  from {
+    opacity: 0;
+    translate: 0 4px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* 完了ボックス: セクションと同じリビール(フェード+12px上昇) */
+@keyframes doneIn {
+  from {
+    opacity: 0;
+    translate: 0 12px;
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -9,6 +36,7 @@
   border-left-width: 4px;
   background: var(--color-error-bg);
   padding: var(--space-4) var(--space-6);
+  animation: noteIn var(--dur-quick) var(--ease-out) both;
 }
 
 .summaryTitle {
@@ -51,6 +79,12 @@
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  transition: color var(--dur-quick) var(--ease-out);
+}
+
+/* いま記入している欄: 製図者が参照中の行をラベル色で示す */
+.field:focus-within .label {
+  color: var(--color-accent-strong);
 }
 
 .required {
@@ -69,6 +103,12 @@
   border: 1px solid var(--c-usuzumi);
   border-radius: var(--radius);
   background: var(--color-field-bg);
+  transition: border-color var(--dur-quick) var(--ease-out);
+}
+
+/* hover は色変化のみ(薄墨→墨)。朱枠(aria-invalid)が後勝ちするようこの位置に置く */
+.input:hover {
+  border-color: var(--color-text);
 }
 
 .input[aria-invalid='true'] {
@@ -89,6 +129,7 @@ textarea.input {
 .error {
   font-size: var(--fs-small);
   color: var(--color-error);
+  animation: noteIn var(--dur-quick) var(--ease-out) both;
 }
 
 .submit {
@@ -124,6 +165,7 @@ textarea.input {
   border-left-width: 4px;
   background: var(--color-success-bg);
   padding: var(--space-8);
+  animation: doneIn var(--dur-reveal) var(--ease-out) both;
 }
 
 .doneTitle {
