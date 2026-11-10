@@ -53,8 +53,15 @@
 
 .itemHead {
   display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.itemTitle {
+  display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  min-width: 0;
 }
 
 .itemName {
@@ -129,7 +136,6 @@
 .materialCategory {
   font-weight: 500;
   letter-spacing: 0.08em;
-  flex: 0 0 9em;
 }
 
 .materialGrades {
@@ -148,21 +154,33 @@
 @media (min-width: 768px) {
   .item {
     flex-direction: row;
+    align-items: center;
     gap: var(--space-8);
   }
 
   .itemHead {
-    flex: 0 0 20rem;
+    flex: 0 0 23rem;
   }
 
   .materialRow {
     flex-direction: row;
     align-items: baseline;
   }
+
+  /* 縦積みのときに flex-basis を付けると「高さ」になり、材質名の下に 9em の空きができる。
+     横並びになる幅からだけ指定する */
+  .materialCategory {
+    flex: 0 0 9em;
+  }
 }
 
 @media (min-width: 1024px) {
   .item {
     padding-block: var(--space-8);
+  }
+
+  .itemHead {
+    flex-basis: 26rem;
+    gap: var(--space-6);
   }
 }

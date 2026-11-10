@@ -1,0 +1,68 @@
+.icon {
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.outline,
+.thin,
+.accent,
+.accentThin,
+.center {
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
+.outline {
+  stroke: var(--c-sumi);
+  stroke-width: 1.5;
+}
+
+.thin {
+  stroke: var(--c-usuzumi);
+  stroke-width: 1;
+}
+
+.accent {
+  stroke: var(--c-tokiwa);
+  stroke-width: 1.5;
+}
+
+.accentThin {
+  stroke: var(--c-tokiwa);
+  stroke-width: 1;
+}
+
+/* 中心線: 一点鎖線 */
+.center {
+  stroke: var(--c-usuzumi);
+  stroke-width: 0.8;
+  stroke-dasharray: 8 2 1.5 2;
+}
+
+/* 線描画: 行のリビールに少し遅れて引きはじめる */
+.draw {
+  stroke-dasharray: 1;
+  transition: stroke-dashoffset var(--dur-draw) var(--ease-draw)
+    calc(var(--reveal-delay, 0s) + 0.15s);
+}
+
+.fade {
+  transition: opacity 0.45s var(--ease-out) calc(var(--reveal-delay, 0s) + 0.7s);
+}
+
+:global(.reveal[data-visible='false']) .draw {
+  stroke-dashoffset: 1;
+}
+
+:global(.reveal[data-visible='false']) .fade {
+  opacity: 0;
+}
+
+@media (min-width: 1024px) {
+  .icon {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}

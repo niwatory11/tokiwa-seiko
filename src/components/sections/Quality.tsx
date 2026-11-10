@@ -39,7 +39,13 @@ function SampleReport() {
             <span className={styles.mono}>{sampleReport.drawingNo}</span>
           </span>
         </figcaption>
-        <div className={styles.tableScroll}>
+        {/* 横にスクロールする枠は、キーボードでも動かせるようフォーカスを受ける */}
+        <div
+          className={styles.tableScroll}
+          role="group"
+          aria-label={sampleReport.scrollLabel}
+          tabIndex={0}
+        >
           <table className={styles.table}>
             <thead>
               <tr>

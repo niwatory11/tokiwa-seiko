@@ -1,4 +1,5 @@
 import { materials, materialsNote, services } from '../../data/services'
+import { ProcessIcon } from '../ui/ProcessIcon'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeading } from '../ui/SectionHeading'
 import styles from './Services.module.css'
@@ -28,8 +29,11 @@ export function Services() {
               className={styles.item}
             >
               <div className={styles.itemHead}>
-                <h3 className={styles.itemName}>{service.name}</h3>
-                <p className={styles.itemSpec}>{service.spec}</p>
+                <ProcessIcon variant={service.id} />
+                <div className={styles.itemTitle}>
+                  <h3 className={styles.itemName}>{service.name}</h3>
+                  <p className={styles.itemSpec}>{service.spec}</p>
+                </div>
               </div>
               <p className={styles.itemBody}>{service.body}</p>
             </Reveal>

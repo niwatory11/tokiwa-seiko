@@ -33,6 +33,8 @@ export const qualityLede =
  * 測定値はすべて例示で、実在の製品・測定結果ではない。
  */
 export const sampleReport = {
+  /** 狭い画面で表だけが横にスクロールする枠の名前(キーボードで枠に入れるようにするため) */
+  scrollLabel: '検査成績書の表(狭い画面では横にスクロールできます)',
   title: '検査成績書',
   example: '記入例',
   drawingNo: 'TKW-0001',

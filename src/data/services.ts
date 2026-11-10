@@ -6,8 +6,11 @@ export const facts = [
   { value: '2', unit: '営業日', label: '見積もり回答' },
 ] as const
 
+/** 加工方法の種類。略図(ProcessIcon)の出し分けにも使う */
+export type ServiceId = 'milling' | 'turning' | 'wire' | 'finish'
+
 export type Service = {
-  id: string
+  id: ServiceId
   name: string
   spec: string
   body: string
