@@ -8,8 +8,11 @@ import { Quality } from './components/sections/Quality'
 import { Works } from './components/sections/Works'
 import { Company } from './components/sections/Company'
 import { Quote } from './components/sections/Quote'
+import { useInitialHashScroll } from './hooks/useInitialHashScroll'
 
 function App() {
+  useInitialHashScroll()
+
   return (
     <>
       <SkipLink />

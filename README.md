@@ -46,7 +46,7 @@ B2B製造業の共通言語である機械図面の様式を、そのままデ�
 | ビルド | Vite 8 |
 | スタイル | CSS Modules + CSS Custom Properties(デザイントークン) |
 | フォント | @fontsource(セルフホスト・unicode-rangeスライス配信) |
-| テスト | Vitest + Testing Library(40件) |
+| テスト | Vitest + Testing Library(56件) |
 | lint | oxlint |
 
 アニメーションライブラリ・CSSフレームワークは使用していません(依存は最小限)。
