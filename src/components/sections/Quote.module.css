@@ -2,58 +2,134 @@
   background: var(--color-bg);
 }
 
+/* ---------- 工程図 ---------- */
+
+.flowWrap {
+  --flow-gap: var(--space-12);
+  margin-bottom: clamp(var(--space-12), 7vw, var(--space-20));
+}
+
 .flow {
   list-style: none;
-  counter-reset: none;
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-8);
-  margin-bottom: clamp(var(--space-12), 7vw, var(--space-20));
+  gap: var(--flow-gap);
 }
 
 .step {
   position: relative;
-  padding-top: var(--space-4);
-  border-top: 2px solid var(--color-line);
+  display: flex;
+}
+
+.box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid var(--c-sumi);
+  background: var(--color-bg-alt);
+}
+
+.boxHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--color-line);
 }
 
 .stepNo {
   font-family: var(--font-mono);
   font-size: var(--fs-caption);
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   color: var(--color-accent);
 }
 
-/* 現在ステップ風に、番号の上の罫線をアクセントで上書き */
-.step::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: 0;
-  width: var(--space-8);
-  border-top: 2px solid var(--color-accent);
-  transform-origin: left center;
-  transition: scale 0.5s var(--ease-draw)
-    calc(var(--reveal-delay, 0s) + 0.2s);
+.actor,
+.actorClient {
+  padding: 0 var(--space-2);
+  font-size: var(--fs-caption);
+  letter-spacing: 0.1em;
 }
 
-.step[data-visible='false']::before {
-  scale: 0 1;
+.actor {
+  background: var(--color-accent-bg);
+  color: var(--color-accent-strong);
+}
+
+.actorClient {
+  border: 1px solid var(--color-line);
+  color: var(--color-text-muted);
 }
 
 .stepTitle {
-  margin-top: var(--space-2);
+  padding: var(--space-4) var(--space-4) 0;
   font-size: var(--fs-h3);
   letter-spacing: 0.06em;
 }
 
 .stepBody {
-  margin-top: var(--space-2);
+  flex: 1;
+  padding: var(--space-2) var(--space-4) var(--space-4);
   font-size: var(--fs-small);
   line-height: 1.9;
   color: var(--color-text-muted);
 }
+
+.output {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px dashed var(--color-line);
+  font-size: var(--fs-small);
+}
+
+.outputLabel {
+  font-size: var(--fs-caption);
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+
+/* 矢印(1024px未満は下向き): 線を引いてから矢じりを出す */
+.arrow {
+  position: absolute;
+  left: var(--space-8);
+  top: 100%;
+  width: 1.5px;
+  height: var(--flow-gap);
+  background: var(--c-sumi);
+  transform-origin: center top;
+  transition: scale 0.45s var(--ease-draw) calc(var(--reveal-delay, 0s) + 0.35s);
+}
+
+.arrow::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  translate: -50% 0;
+  border-inline: 5px solid transparent;
+  border-top: 8px solid var(--c-sumi);
+  transition: opacity var(--dur-quick) var(--ease-out) calc(var(--reveal-delay, 0s) + 0.75s);
+}
+
+.step[data-visible='false'] .arrow {
+  scale: 1 0;
+}
+
+.step[data-visible='false'] .arrow::after {
+  opacity: 0;
+}
+
+/* リピートの戻り線は 1024px以上だけ(それ未満は 04 の本文が同じことを言う) */
+.repeat {
+  display: none;
+}
+
+/* ---------- フォーム ---------- */
 
 .formWrap {
   background: var(--color-bg-alt);
@@ -71,12 +147,119 @@
 @media (min-width: 768px) {
   .flow {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-8) var(--space-8);
+    gap: var(--flow-gap) var(--flow-gap);
+  }
+
+  /* 2列のとき: 左の箱(01・03)から右向きの矢印 */
+  .step:nth-child(odd) .arrow {
+    left: 100%;
+    top: var(--space-6);
+    width: var(--flow-gap);
+    height: 1.5px;
+    transform-origin: left center;
+  }
+
+  .step:nth-child(odd) .arrow::after {
+    left: auto;
+    right: 0;
+    bottom: auto;
+    top: 50%;
+    translate: 0 -50%;
+    border-block: 5px solid transparent;
+    border-inline: 0;
+    border-left: 8px solid var(--c-sumi);
+    border-top-color: transparent;
+  }
+
+  .step:nth-child(odd)[data-visible='false'] .arrow {
+    scale: 0 1;
+  }
+
+  /* 段の折り返し(02 → 03)は矢印を描かない。番号 P-03 で順序は読める */
+  .step:nth-child(2) .arrow {
+    display: none;
   }
 }
 
 @media (min-width: 1024px) {
+  .flowWrap {
+    --flow-gap: var(--space-8);
+  }
+
   .flow {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* 4列: すべて右向きの矢印に戻す */
+  .step .arrow,
+  .step:nth-child(2) .arrow {
+    display: block;
+    left: 100%;
+    top: var(--space-6);
+    width: var(--flow-gap);
+    height: 1.5px;
+    transform-origin: left center;
+  }
+
+  .step .arrow::after,
+  .step:nth-child(2) .arrow::after {
+    display: block;
+    left: auto;
+    right: 0;
+    bottom: auto;
+    top: 50%;
+    translate: 0 -50%;
+    border-block: 5px solid transparent;
+    border-inline: 0;
+    border-left: 8px solid var(--c-sumi);
+    border-top-color: transparent;
+  }
+
+  .step[data-visible='false'] .arrow,
+  .step:nth-child(2)[data-visible='false'] .arrow {
+    scale: 0 1;
+  }
+
+  /* 戻り線: 04 の箱の下から出て、03 の箱の下へ戻る破線。
+     列幅 c = (100% - 3g) / 4 なので、03 の中心は 2.5c + 2g = 62.5% + 0.125g、
+     03〜04 の中心間は c + g = 25% + 0.25g */
+  .repeat {
+    display: block;
+    position: relative;
+    margin-left: calc(62.5% + var(--flow-gap) * 0.125);
+    width: calc(25% + var(--flow-gap) * 0.25);
+  }
+
+  .repeatLine {
+    position: relative;
+    display: block;
+    height: var(--space-8);
+    border: 1.5px dashed var(--c-usuzumi);
+    border-top: 0;
+    transform-origin: center top;
+    transition: scale 0.5s var(--ease-draw) 0.4s;
+  }
+
+  /* 03 側の上向きの矢じり */
+  .repeatLine::before {
+    content: '';
+    position: absolute;
+    left: -1.5px;
+    top: 0;
+    translate: -50% 0;
+    border-inline: 5px solid transparent;
+    border-bottom: 8px solid var(--c-usuzumi);
+  }
+
+  .repeat[data-visible='false'] .repeatLine {
+    scale: 1 0;
+  }
+
+  .repeatNote {
+    margin-top: var(--space-2);
+    text-align: center;
+    font-size: var(--fs-caption);
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
   }
 }

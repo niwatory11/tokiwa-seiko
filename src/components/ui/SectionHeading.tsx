@@ -7,12 +7,14 @@ type SectionHeadingProps = {
   no: string
   title: string
   lede?: string
+  /** 墨の地(品質保証)の上で使うとき 'inverse' */
+  tone?: 'default' | 'inverse'
 }
 
 /** 図面の図番のように、等幅数号+見出し+罫線で組むセクション見出し */
-export function SectionHeading({ id, no, title, lede }: SectionHeadingProps) {
+export function SectionHeading({ id, no, title, lede, tone = 'default' }: SectionHeadingProps) {
   return (
-    <Reveal className={styles.wrap}>
+    <Reveal className={tone === 'inverse' ? `${styles.wrap} ${styles.inverse}` : styles.wrap}>
       <p className={styles.no} aria-hidden="true">
         {no}
       </p>

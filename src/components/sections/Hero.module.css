@@ -16,13 +16,126 @@
   flex-direction: column;
 }
 
-.inner {
-  flex: 1;
+/* --- 図面枠: 外枠(太)と内枠(細)の二重枠。白い用紙を方眼の机に置いた見立て --- */
+
+.sheet {
+  --frame-gap: 6px;
+  --sheet-pad: clamp(var(--space-6), 4vw, var(--space-12));
+  position: relative;
+  margin-block: var(--space-6) var(--space-8);
+  padding: calc(var(--sheet-pad) + var(--frame-gap));
+  border: 1.5px solid var(--c-sumi);
+  background: var(--color-bg-alt);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: var(--space-12);
-  padding-block: clamp(var(--space-12), 8vw, var(--space-24));
+  gap: var(--space-8);
+}
+
+/* 内枠は中身より手前に描く(右下の表題欄の背景で線が消えないように) */
+.sheet::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: var(--frame-gap);
+  border: 1px solid var(--c-sumi);
+  pointer-events: none;
+}
+
+/* 区域記号(768px以上): 外枠と内枠のすき間に A〜D / 1〜2 と区切りの目盛り */
+.zones {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sheet {
+    --frame-gap: 14px;
+  }
+
+  .zones {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .zones::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 25% 0 / 1px var(--frame-gap) no-repeat,
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 50% 0 / 1px var(--frame-gap) no-repeat,
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 75% 0 / 1px var(--frame-gap) no-repeat,
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 25% 100% / 1px var(--frame-gap) no-repeat,
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 50% 100% / 1px var(--frame-gap) no-repeat,
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 75% 100% / 1px var(--frame-gap) no-repeat,
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 0 50% / var(--frame-gap) 1px no-repeat,
+      linear-gradient(var(--c-sumi), var(--c-sumi)) 100% 50% / var(--frame-gap) 1px no-repeat;
+  }
+
+  .zone {
+    position: absolute;
+    width: var(--frame-gap);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    line-height: var(--frame-gap);
+    text-align: center;
+    letter-spacing: 0;
+    color: var(--color-text-muted);
+  }
+
+  .zoneTop {
+    top: 0;
+  }
+
+  .zoneBottom {
+    bottom: 0;
+  }
+
+  /* 上下: 4区域の中央。子の並びは 上A〜D(1〜4) 下A〜D(5〜8) 左1〜2(9〜10) 右1〜2(11〜12) */
+  .zone:nth-child(1),
+  .zone:nth-child(5) {
+    left: calc(12.5% - var(--frame-gap) / 2);
+  }
+
+  .zone:nth-child(2),
+  .zone:nth-child(6) {
+    left: calc(37.5% - var(--frame-gap) / 2);
+  }
+
+  .zone:nth-child(3),
+  .zone:nth-child(7) {
+    left: calc(62.5% - var(--frame-gap) / 2);
+  }
+
+  .zone:nth-child(4),
+  .zone:nth-child(8) {
+    left: calc(87.5% - var(--frame-gap) / 2);
+  }
+
+  .zoneLeft {
+    left: 0;
+  }
+
+  .zoneRight {
+    right: 0;
+  }
+
+  .zone:nth-child(9),
+  .zone:nth-child(11) {
+    top: calc(25% - var(--frame-gap) / 2);
+  }
+
+  .zone:nth-child(10),
+  .zone:nth-child(12) {
+    top: calc(75% - var(--frame-gap) / 2);
+  }
+}
+
+.drawing {
+  width: 100%;
+  max-width: 34rem;
+  margin-inline: auto;
 }
 
 .eyebrow {
@@ -33,9 +146,11 @@
   animation-delay: 0s;
 }
 
+/* 図面枠の中に収める分、全体の表示サイズ(--fs-display)より一段小さい上限にする。
+   「あたりまえに。」が一行に収まらないと「に。」だけが次の行に落ちるため */
 .heading {
   margin-top: var(--space-4);
-  font-size: var(--fs-display);
+  font-size: clamp(2.125rem, 1.4rem + 2.6vw, 3.5rem);
   line-height: 1.25;
   letter-spacing: 0.04em;
   animation-delay: 0.08s;
@@ -69,6 +184,7 @@
 .titleBlock {
   border: 1.5px solid var(--c-sumi);
   background: var(--color-bg-alt);
+  width: 100%;
   max-width: 26rem;
   animation-delay: 0.32s;
 }
@@ -254,17 +370,40 @@
   }
 }
 
+/* 1024px以上: 左に断定、右に図面。表題欄は内枠の右下の角に収める
+   (内枠の線を表題欄の右・下の罫として共有するため、表題欄側の右・下の罫は消す) */
 @media (min-width: 1024px) {
-  .inner {
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: var(--space-16);
-    min-height: calc(78vh - var(--header-h));
+  .sheet {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    grid-template-rows: 1fr auto;
+    column-gap: var(--space-12);
+    row-gap: var(--space-4);
+    padding-bottom: calc(var(--sheet-pad) + var(--frame-gap));
+  }
+
+  .main {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .drawing {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    max-width: none;
   }
 
   .titleBlock {
-    flex: 0 0 24rem;
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    width: 24rem;
+    margin-right: calc(var(--sheet-pad) * -1);
+    margin-bottom: calc(var(--sheet-pad) * -1);
+    border-right: 0;
+    border-bottom: 0;
   }
 }
 

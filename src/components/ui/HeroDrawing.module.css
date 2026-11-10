@@ -1,0 +1,46 @@
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.text,
+.textAccent {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--c-usuzumi);
+}
+
+.textAccent {
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--c-tokiwa);
+}
+
+.textV {
+  writing-mode: vertical-rl;
+}
+
+/* ロード時の製図: 隠し状態は from にのみ書く(reduced-motion では即完了) */
+.draw {
+  stroke-dasharray: 1;
+  animation: hdDraw var(--dur-draw) var(--ease-draw) both;
+  animation-delay: var(--d, 0s);
+}
+
+.fade {
+  animation: hdFade 0.5s var(--ease-out) both;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes hdDraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes hdFade {
+  from {
+    opacity: 0;
+  }
+}

@@ -28,6 +28,12 @@
   --color-on-accent: var(--c-white);
   --color-line: var(--c-keisen);
   --color-line-inverse: rgb(247 248 246 / 0.2);
+  /* 墨の地(品質保証)で使う色: 常盤色は墨の上では沈むため、明るい常盤を使う */
+  --color-bg-inverse: var(--c-sumi);
+  --color-text-inverse: var(--c-paper);
+  --color-text-muted-inverse: #b4beb6;
+  --color-accent-inverse: #7cc49d;
+  --color-grid-inverse: rgb(247 248 246 / 0.06);
   --color-error: var(--c-shu);
   --color-error-bg: var(--c-shu-usu);
   --color-success-bg: var(--c-tokiwa-usu);
@@ -43,7 +49,7 @@
   --fs-h2: clamp(1.625rem, 1.35rem + 1.3vw, 2.25rem);
   --fs-h3: clamp(1.125rem, 1.05rem + 0.4vw, 1.375rem);
   --fs-body-lg: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
-  --fs-body: 1rem;
+  --fs-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --fs-small: 0.875rem;
   --fs-caption: 0.8125rem;
 

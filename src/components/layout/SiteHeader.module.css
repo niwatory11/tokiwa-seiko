@@ -187,28 +187,26 @@
   scale: 0.97;
 }
 
+/* 三本線: 上下の線は自身の border、中の線は ::before。
+   箱の高さを三本線の高さ(12px)にとるので、ボタンの中で文字と上下中央がそろう
+   (以前は高さ 2px の箱から下へ線を足していたため、アイコンが文字より下にずれていた) */
 .menuIcon {
-  display: inline-block;
-  width: 1.1em;
-  border-top: 2px solid currentColor;
   position: relative;
+  display: block;
+  flex: none;
+  width: 1.1em;
+  height: 12px;
+  border-block: 2px solid currentColor;
 }
 
-.menuIcon::before,
-.menuIcon::after {
+.menuIcon::before {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
+  top: 50%;
   border-top: 2px solid currentColor;
-}
-
-.menuIcon::before {
-  top: 4px;
-}
-
-.menuIcon::after {
-  top: 10px;
+  translate: 0 -50%;
 }
 
 @media (min-width: 480px) {

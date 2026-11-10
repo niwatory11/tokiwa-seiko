@@ -34,3 +34,20 @@
   max-width: 36em;
   color: var(--color-text-muted);
 }
+
+/* 墨の地の上: 常盤色は沈むので明るい常盤、リードは明るい薄墨 */
+.inverse .no {
+  color: var(--color-accent-inverse);
+}
+
+.inverse .no::after {
+  border-top-color: var(--color-accent-inverse);
+}
+
+.inverse .title {
+  color: var(--color-text-inverse);
+}
+
+.inverse .lede {
+  color: var(--color-text-muted-inverse);
+}

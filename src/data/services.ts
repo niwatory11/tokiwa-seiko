@@ -56,3 +56,15 @@ export const materials: Material[] = [
 
 export const materialsNote =
   '上記以外の材質もご相談ください。材料手配からミルシート(材料証明書)の添付まで対応します。'
+
+/** ヒーローの図面の表題欄(図面右下)。架空注記も図面様式で組み込む */
+export const heroTitleBlock = [
+  { label: '品名', value: '精密部品の切削加工', mono: false },
+  { label: '材質', value: 'アルミ / ステンレス / チタン ほか', mono: false },
+  { label: '図番', value: 'TKW-0001', mono: true },
+  { label: '注記', value: '本サイトは架空企業のコンセプトサイトです', mono: false },
+] as const
+
+/** ヒーローの図面(フランジの図示例)の読み上げ用説明 */
+export const heroDrawingLabel =
+  'フランジの図面の例。正面図と断面図に、外径φ120、内径φ48 H7、ボルト穴6か所(P.C.D. φ90)、直角度0.01の指示が描かれている'
