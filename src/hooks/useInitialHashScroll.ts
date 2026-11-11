@@ -21,28 +21,36 @@ export function findHashTarget(hash: string): HTMLElement | null {
 }
 
 /**
- * 再読み込み・「戻る/進む」で、ブラウザが読んでいた位置をすでに復元したか。
- * 復元できているなら、その位置を #id で上書きしない
+ * 再読み込み・「戻る/進む」で開いたか。
+ * このときはブラウザが読んでいた位置を復元するので、#id では動かさない
  * (素の HTML でも、再読み込みでは #id ではなく読んでいた位置に戻る)。
- * 復元されず先頭のままなら false を返し、通常どおり #id へ移動させる。
+ *
+ * 先頭で読んでいたなら、戻る先も先頭になる。ブラウザは load が済むまで
+ * 覚えている位置を当て直すため、ここで #id へ動かしても load の時点で先頭へ戻され、
+ * 章が一瞬見えて跳ぶだけになる。位置が 0 でも「復元されなかった」とは扱わない。
+ * (復元が確実に働くのは、main.tsx が最初の描画を load より前に終えているため)
  */
-function hasRestoredScrollPosition(): boolean {
+function isPositionRestoredByBrowser(): boolean {
   const entry = performance.getEntriesByType('navigation')[0] as
     | PerformanceNavigationTiming
     | undefined
   const isHistoryNavigation =
     entry?.type === 'reload' || entry?.type === 'back_forward'
+  if (!isHistoryNavigation) return false
 
-  // scrollY を読むとレイアウトが確定し、ブラウザは保留していた位置の復元をここで行う
-  return isHistoryNavigation && window.scrollY > 0
+  // scrollY を読むとレイアウトが確定し、ブラウザは保留していた位置の復元をここで行う。
+  // 復元を先に済ませておけば、ブラウザ自身が #id へ(なめらかに)動かすこともない
+  void window.scrollY
+  return true
 }
 
 /**
  * URL に「#章のid」を付けて開いたとき、その章まで移動する。
  *
- * ブラウザは HTML を読み終えた時点で #id の要素を探すが、このサイトの章は
- * React が後から描くため、その時点ではまだ存在せず、移動が起きない。
- * そこで最初の描画が DOM に入った直後(画面に出る前)に一度だけ、同じ移動を行う。
+ * 章は React が描くので、最初の描画が DOM に入った直後(画面に出る前)に一度だけ移動する。
+ * main.tsx が最初の描画を同期で終えるため、ブラウザ自身も HTML を読み終えた時点で
+ * #id の章を見つけて動かすが、そちらは `html { scroll-behavior: smooth }` に従って
+ * 先頭からなめらかに流れる。先にここで章へ着いておくので、その動きは起きない。
  *
  * - 位置: 固定ヘッダーぶんの余白は global.css の `[id] { scroll-margin-top }` が受け持つ
  * - 動き: 開いた直後の移動は演出ではないため、`html { scroll-behavior: smooth }` に
@@ -51,7 +59,7 @@ function hasRestoredScrollPosition(): boolean {
 export function useInitialHashScroll(): void {
   useLayoutEffect(() => {
     const target = findHashTarget(window.location.hash)
-    if (!target || hasRestoredScrollPosition()) return
+    if (!target || isPositionRestoredByBrowser()) return
 
     target.scrollIntoView({ behavior: 'instant', block: 'start' })
   }, [])

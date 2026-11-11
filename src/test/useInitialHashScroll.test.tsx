@@ -70,7 +70,7 @@ describe('URL に #章のid を付けて開いたとき', () => {
   )
 
   it.each(['reload', 'back_forward'] as const)(
-    '再読み込み・戻る/進む(%s)で、ブラウザが読んでいた位置を復元済みなら動かさない',
+    '再読み込み・戻る/進む(%s)では、ブラウザが戻す読んでいた位置を #id で上書きしない',
     (type) => {
       vi.spyOn(performance, 'getEntriesByType').mockReturnValue([
         { type } as PerformanceNavigationTiming,
@@ -83,16 +83,20 @@ describe('URL に #章のid を付けて開いたとき', () => {
     },
   )
 
-  it('再読み込みでも、位置が復元されず先頭のままなら章まで移動する', () => {
-    vi.spyOn(performance, 'getEntriesByType').mockReturnValue([
-      { type: 'reload' } as PerformanceNavigationTiming,
-    ])
-    openWith('#equipment')
-    render(<App />)
+  it.each(['reload', 'back_forward'] as const)(
+    '再読み込み・戻る/進む(%s)で先頭にいたときも、章へは動かさない(先頭が読んでいた位置)',
+    (type) => {
+      vi.spyOn(performance, 'getEntriesByType').mockReturnValue([
+        { type } as PerformanceNavigationTiming,
+      ])
+      // ブラウザは load が済むまで先頭(0)を当て直す。ここで章へ動かすと、一瞬見えて先頭へ跳ぶ
+      openWith('#equipment')
+      render(<App />)
 
-    expect(calls).toHaveLength(1)
-    expect(calls[0].element).toBe(document.getElementById('equipment'))
-  })
+      expect(window.scrollY).toBe(0)
+      expect(calls).toHaveLength(0)
+    },
+  )
 })
 
 describe('findHashTarget', () => {
